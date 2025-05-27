@@ -13,6 +13,7 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [formErrors, setFormErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false); // 👈 password toggle state
 
   const { login, isLoading, error, isAuthenticated } = useAuthStore();
   const router = useRouter();
@@ -41,7 +42,7 @@ export default function Login() {
     const errors = {};
     if (!email) errors.email = 'Email is required';
     else if (!/\S+@\S+\.\S+/.test(email)) errors.email = 'Email is invalid';
-    
+
     if (!password) errors.password = 'Password is required';
     else if (password.length < 6) errors.password = 'Password must be at least 6 characters';
 
@@ -105,39 +106,42 @@ export default function Login() {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className={`w-full px-4 py-2 mt-1 text-black text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 ${
-                  formErrors.email ? 'border-red-500' : ''
-                }`}
+                className={`w-full px-4 py-2 mt-1 text-black text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 ${formErrors.email ? 'border-red-500' : ''
+                  }`}
                 placeholder="you@example.com"
               />
               {formErrors.email && (
                 <p className="mt-1 text-sm text-red-500">{formErrors.email}</p>
               )}
             </div>
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-600">
-                Password
-              </label>
+            <div className="relative">
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`w-full px-4 py-2 mt-1 text-black text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 ${
-                  formErrors.password ? 'border-red-500' : ''
-                }`}
+                className={`w-full px-4 py-2 mt-1 text-black text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 ${formErrors.password ? 'border-red-500' : ''
+                  }`}
                 placeholder="••••••••"
               />
-              {formErrors.password && (
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-3 top-3 text-gray-500 text-sm focus:outline-none"
+              >
+                {showPassword ? 'hide' : 'show  '}
+
+              </button>
+               {formErrors.password && (
                 <p className="mt-1 text-sm text-red-500">{formErrors.password}</p>
               )}
             </div>
+
             <button
               type="submit"
               disabled={isLoading}
-              className={`w-full px-4 py-2 font-semibold text-white rounded-md ${
-                isLoading ? 'bg-yellow-400 cursor-not-allowed' : 'bg-yellow-500 hover:bg-yellow-600'
-              }`}
+              className={`w-full px-4 py-2 font-semibold text-white rounded-md ${isLoading ? 'bg-yellow-400 cursor-not-allowed' : 'bg-yellow-500 hover:bg-yellow-600'
+                }`}
             >
               {isLoading ? 'Logging in...' : 'Login'}
             </button>

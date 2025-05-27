@@ -6,12 +6,12 @@ const Product = require("../models/Product");
 
 exports.placeOrder = async (req, res) => {
   try {
-    const { items, totalAmount, address } = req.body;
+    const { items, totalAmount, address , paymentMethod} = req.body;
     const { _id, name ,image} = req.user;
 
-    console.log("Request Body:", req.body); // 🐞 Debug
+    // console.log("Request Body:", req.body); //Debug
 
-    // 1️⃣ Check each product stock
+    // 1️ Check each product stock
     for (const item of items) {
       const product = await Product.findById(item.productId);
 
@@ -24,7 +24,7 @@ exports.placeOrder = async (req, res) => {
       }
     }
 
-    // 2️⃣ Reduce stock
+    // 2️ Reduce stock
     for (const item of items) {
       await Product.findByIdAndUpdate(item.productId, {
         $inc: { availableStock: -item.quantity },
@@ -44,7 +44,7 @@ exports.placeOrder = async (req, res) => {
 
 
 
-    // 3️⃣ Save Order
+    // 3️ Save Order
     const newOrder = new Order({
       userId: _id,
       userName: name,
@@ -53,6 +53,7 @@ exports.placeOrder = async (req, res) => {
       deliveryDate,
       items,
       totalAmount,
+      paymentMethod,
     });
 
     await newOrder.save();

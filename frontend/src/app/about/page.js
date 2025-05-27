@@ -39,7 +39,7 @@ export default function About() {
             <video
           className="md:w-3/5 h-2/5 object-cover rounded-lg flex justify-center"
         //   src=".\video\Document - Google Chrome 2024-02-08 19-55-33.mp4"
-          src="./poject-videyo.mp4"
+          src="./mango.mp4"
           type="video/mp4"
           autoPlay
           muted

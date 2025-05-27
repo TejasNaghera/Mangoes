@@ -1,8 +1,8 @@
 // utils/api.js
 import axios from 'axios';
-
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const api = axios.create({
-  baseURL: 'http://localhost:5000',  // 🔥 તમારા backend server નું URL
+  baseURL: `${API_URL}`,  // 🔥 તમારા backend server નું URL
 });
 
 export default api;

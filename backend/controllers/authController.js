@@ -9,7 +9,7 @@ const createToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn
 exports.register = async (req, res) => {
   try {
     const { name, email, password,number } = req.body;
-
+   console.log(req.body)
     // Validate input
     if (!name || !email || !password || !number) {
       return res.status(400).json({ error: 'All fields are required' });
@@ -58,6 +58,8 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    // console.log(req.body);
+    
 
     // Validate input
     if (!email || !password) {

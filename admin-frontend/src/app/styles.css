@@ -1,0 +1,127 @@
+/* styles.css */
+:root {
+    --primary-color: #f59e0b; /* Amber for mango theme */
+    --primary-dark: #d97706;
+    --text-color: #1f2937;
+    --border-color: #e5e7eb;
+    --error-color: #dc2626;
+    --background-color: #ffffff;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .form-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: var(--background-color);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow);
+  }
+  
+  .form-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    transition: var(--transition);
+  }
+  
+  .form-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+  }
+  
+  .form-input.input-error {
+    border-color: var(--error-color);
+  }
+  
+  .error-text {
+    color: var(--error-color);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  
+  .image-preview {
+    margin-top: 1rem;
+  }
+  
+  .preview-label {
+    font-size: 0.875rem;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+  }
+  
+  .preview-image {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+  }
+  
+  .submit-button {
+    width: 100%;
+    background: var(--primary-color);
+    color: var(--background-color);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  .submit-button:hover {
+    background: var(--primary-dark);
+  }
+  
+  @media (max-width: 640px) {
+    .form-container {
+      padding: 1.5rem;
+      margin: 1rem;
+    }
+  
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .form-title {
+      font-size: 1.5rem;
+    }
+  }

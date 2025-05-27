@@ -11,7 +11,7 @@ config.autoAddCss = false;
 
 export const metadata = {
   title: "KesarMart",
-  description: "Buy the best saffron online",
+  description: "Buy the best  online",
 };
 
 export default function RootLayout({ children }) {

@@ -29,6 +29,11 @@ const orderSchema = new mongoose.Schema({
     required: true,
     default: 0
   },
+  paymentMethod:{
+    type:String,
+    required: true,
+    
+  },
   totalAmount: Number,
 }, { timestamps: true });
 

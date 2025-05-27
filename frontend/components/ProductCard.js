@@ -7,18 +7,27 @@ const ProductCard = ({ product }) => {
   const { addToCart, loading } = useCartStore();
   const [isAdding, setIsAdding] = useState(false);
   const baseURL = process.env.NEXT_PUBLIC_API_URL
-  const handleAddToCart = async () => {
-    setIsAdding(true);
-    try {
-      await addToCart(product);
-      toast.success('Product added to cart successfully!');
-    } catch (error) {
-      console.error('Error adding to cart:', error);
-      toast.error('Failed to add product to cart');
-    } finally {
-      setIsAdding(false);
-    }
-  };
+
+ const handleAddToCart = async () => {
+  // Check if user is logged in (adjust this logic based on your auth setup)
+  const token = localStorage.getItem('auth-storage'); // or use your Zustand store
+
+  if (!token) {
+    toast.error('Please login to add products to your cart.');
+    return;
+  }
+
+  setIsAdding(true);
+  try {
+    await addToCart(product);
+    toast.success('Product added to cart successfully!');
+  } catch (error) {
+    console.error('Error adding to cart:', error);
+    toast.error('Failed to add product to cart');
+  } finally {
+    setIsAdding(false);
+  }
+};
 
   return (
 <div className="p-3 sm:p-4 w-full border rounded-lg shadow-lg bg-white hover:shadow-xl transition-shadow duration-300">

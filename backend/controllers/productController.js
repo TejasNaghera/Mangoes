@@ -1,11 +1,12 @@
 const Product = require("../models/Product");
 
-// ➕ Add Product
+//  Add Product
 exports.addProduct = async (req, res) => {
   try {
     const { name, description, price, offerPrice, onSale,  availableStock } = req.body;
     const image = req.file ? `/uploads/${req.file.filename}` : "";
-
+      //  console.log(req.file.filename);
+       
     const product = new Product({ name, description, image, price, offerPrice, onSale ,  availableStock});
     await product.save();
     res.status(201).json(product);
@@ -14,7 +15,7 @@ exports.addProduct = async (req, res) => {
   }
 };
 
-// ✏️ Update Product
+//  Update Product
 exports.updateProduct = async (req, res) => {
   try {
     const updatedData = { ...req.body };
@@ -29,7 +30,7 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
-// ❌ Delete Product
+//  Delete Product
 exports.deleteProduct = async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
@@ -39,7 +40,7 @@ exports.deleteProduct = async (req, res) => {
   }
 };
 
-// 📄 Get All Products
+//  Get All Products
 exports.getAllProducts = async (req, res) => {
   try {
     const products = await Product.find();

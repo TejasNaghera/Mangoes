@@ -5,47 +5,52 @@ const Product = require('../models/Product');
 // Add product to cart
 exports.addToCart = async (req, res) => {
   try {
-    console.log('📦 Incoming cart data:', req.body);
-    const { productId, quantity = 1, image,name } = req.body;  // Get image from request body
+    // console.log('📦 Incoming cart data:', req.body);
+    const { productId, quantity = 1, image, name, paymentMethod } = req.body;
     
-    console.log('👤 Authenticated user ID:', req.userId);
+    const parsedQuantity = parseInt(quantity);
+    if (!productId || isNaN(parsedQuantity) || parsedQuantity <= 0) {
+      return res.status(400).json({ error: 'Invalid productId or quantity' });
+    }
 
-    // Validate product exists
+    // console.log('👤 Authenticated user ID:', req.userId);
+
+    // Check if product exists
     const product = await Product.findById(productId);
     if (!product) {
       return res.status(404).json({ error: 'Product not found' });
     }
 
-    // Find user's cart or create a new one
+    // Find or create cart
     let cart = await Cart.findOne({ user: req.userId });
-    
     if (!cart) {
-      // Create new cart if user doesn't have one
       cart = new Cart({ user: req.userId, items: [] });
     }
 
-    // Check if product already exists in cart
+    // Check if item exists
     const itemIndex = cart.items.findIndex(item => item.product.toString() === productId);
-    
     if (itemIndex > -1) {
-      // Update quantity if product already in cart
-      cart.items[itemIndex].quantity += quantity;
+      cart.items[itemIndex].quantity += parsedQuantity;
     } else {
-      // Add new item to cart with image
-      cart.items.push({ product: productId, quantity, image,name});
+      cart.items.push({
+        product: productId,
+        quantity: parsedQuantity,
+        image,       // Optional
+        name,        // Optional
+        paymentMethod // Optional
+      });
     }
 
     await cart.save();
-    
-    // Populate product details for response
     await cart.populate('items.product');
-    
+
     res.status(200).json(cart);
   } catch (err) {
-    console.error(err);
+    console.error('❌ Error adding to cart:', err);
     res.status(500).json({ error: 'Failed to add item to cart' });
   }
 };
+
 
 // Get user's cart
 exports.getCart = async (req, res) => {
